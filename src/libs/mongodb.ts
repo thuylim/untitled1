@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import type { MongooseCache } from "@/types/global";
 
-// ÉP KIỂU RÕ RÀNG Ở ĐÂY
 const MONGODB_URI: string = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
