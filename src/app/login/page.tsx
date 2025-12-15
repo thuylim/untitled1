@@ -1,53 +1,84 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { login } from "@/libs/services/authActions";
+import { useState } from "react"
+import { login } from "@/libs/services/authActions"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+} from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
 
 export default function LoginPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [err, setErr] = useState("");
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [err, setErr] = useState("")
 
     const submit = async () => {
         try {
-            await login(email, password);
-            location.href = "/";
+            await login(email, password)
+            window.location.href = "/"
         } catch (e: any) {
-            setErr(e.message);
+            setErr(e.message)
         }
-    };
+    }
 
     return (
-        <div className="container">
-            <div className="card" style={{ maxWidth: 400, margin: "auto" }}>
-                <h2 className="card-title">Đăng nhập</h2>
+        <div className="min-h-screen flex items-center justify-center bg-slate-100">
+            <Card className="w-[380px] shadow-xl">
+                <CardHeader className="text-center space-y-1">
+                    <CardTitle className="text-2xl">Đăng nhập</CardTitle>
+                    <CardDescription>
+                        Chào mừng bạn quay trở lại 👋
+                    </CardDescription>
+                </CardHeader>
 
-                {err && <p style={{ color: "red" }}>{err}</p>}
+                <CardContent className="space-y-4">
+                    {err && (
+                        <p className="text-sm text-center text-red-500">{err}</p>
+                    )}
 
-                <div className="form-item">
-                    <label>Email</label>
-                    <input value={email} onChange={e => setEmail(e.target.value)} />
-                </div>
+                    <div className="space-y-2">
+                        <Label>Email</Label>
+                        <Input
+                            value={email}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setEmail(e.target.value)
+                            }
+                        />
+                    </div>
 
-                <div className="form-item">
-                    <label>Mật khẩu</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                </div>
+                    <div className="space-y-2">
+                        <Label>Mật khẩu</Label>
+                        <Input
+                            type="password"
+                            value={password}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setPassword(e.target.value)
+                            }
+                        />
+                    </div>
 
-                <button className="btn btn-primary" onClick={submit}>
-                    Đăng nhập
-                </button>
-                <p style={{ marginTop: 12 }}>
-                    Chưa có tài khoản?{" "}
-                    <a href="/register" style={{ color: "#2563eb" }}>
-                        Đăng ký
-                    </a>
-                </p>
-            </div>
+                    <Button className="w-full" onClick={submit}>
+                        Đăng nhập
+                    </Button>
+
+                    <p className="text-center text-sm text-muted-foreground">
+                        Chưa có tài khoản?{" "}
+                        <a
+                            href="/register"
+                            className="text-primary underline"
+                        >
+                            Đăng ký
+                        </a>
+                    </p>
+                </CardContent>
+            </Card>
         </div>
-    );
+    )
 }

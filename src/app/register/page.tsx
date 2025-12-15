@@ -1,53 +1,75 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { register } from "@/libs/services/authActions";
+import { useState } from "react"
+import { register } from "@/libs/services/authActions"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+} from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
 
 export default function RegisterPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [msg, setMsg] = useState("");
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [msg, setMsg] = useState("")
 
     const submit = async () => {
         try {
-            await register(email, password);
-
-            setMsg("Đăng ký thành công! Đang chuyển sang trang đăng nhập...");
-
+            await register(email, password)
+            setMsg("Đăng ký thành công! Đang chuyển sang đăng nhập...")
             setTimeout(() => {
-                window.location.href = "/login";
-            }, 1500);
+                window.location.href = "/login"
+            }, 1500)
         } catch (e: any) {
-            setMsg(e.message);
+            setMsg(e.message)
         }
-    };
-
+    }
 
     return (
-        <div className="container">
-            <div className="card" style={{ maxWidth: 400, margin: "auto" }}>
-                <h2 className="card-title">Đăng ký</h2>
+        <div className="min-h-screen flex items-center justify-center bg-slate-100">
+            <Card className="w-[380px] shadow-xl">
+                <CardHeader className="text-center">
+                    <CardTitle className="text-2xl">Đăng ký</CardTitle>
+                    <CardDescription>
+                        Tạo tài khoản mới
+                    </CardDescription>
+                </CardHeader>
 
-                <p>{msg}</p>
+                <CardContent className="space-y-4">
+                    {msg && <p className="text-sm text-center">{msg}</p>}
 
-                <div className="form-item">
-                    <label>Email</label>
-                    <input value={email} onChange={e => setEmail(e.target.value)} />
-                </div>
+                    <div className="space-y-2">
+                        <Label>Email</Label>
+                        <Input
+                            value={email}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setEmail(e.target.value)
+                            }
+                        />
+                    </div>
 
-                <div className="form-item">
-                    <label>Mật khẩu</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                </div>
+                    <div className="space-y-2">
+                        <Label>Mật khẩu</Label>
+                        <Input
+                            type="password"
+                            value={password}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setPassword(e.target.value)
+                            }
+                        />
+                    </div>
 
-                <button className="btn btn-success" onClick={submit}>
-                    Đăng ký
-                </button>
-            </div>
+                    <Button className="w-full" onClick={submit}>
+                        Đăng ký
+                    </Button>
+                </CardContent>
+            </Card>
         </div>
-    );
+    )
 }
